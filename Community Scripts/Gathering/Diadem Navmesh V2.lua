@@ -5,10 +5,11 @@
     *******************
 
     *************************
-    *  Version -> 0.0.1.20  *
+    *  Version -> 0.0.1.21  *
     *************************
    
     Version Notes:
+    0.0.1.21 ->    Update for snd version click changes.
     0.0.1.20 ->    Update for DT changed the /click talk to /click  Talk_Click.
     0.0.1.19.2 ->  More Pandora settings added to count for user error if you have Auto-interact with Gathering Nodes and Auto-Mount after Gathering they are disabled now.
     0.0.1.19.1 ->  Now you don't need to configure plugin options i got you ;D
@@ -649,7 +650,7 @@ function DGathering()
             LogInfo("[Diadem Gathering] [Node Type] Normal Node")
             DGatheringLoop = true
         end 
-        yield("/pcall Gathering true "..NodeSelection)
+        yield("/callback Gathering true "..NodeSelection)
         yield("/wait 0.1")
         while GetCharacterCondition(42) and IsInZone(886) == false do
             yield("/wait 0.2")
@@ -793,31 +794,31 @@ PathStop()
 if NeedsRepair(Repair_Amount) and Self_Repair then
     yield("/generalaction repair")
     yield("/waitaddon Repair")
-    yield("/pcall Repair true 0")
+    yield("/callback Repair true 0")
     yield("/wait 0.1")
     if IsAddonVisible("SelectYesno") then
-        yield("/pcall SelectYesno true 0")
+        yield("/callback SelectYesno true 0")
         yield("/wait 0.1")
     end
     while GetCharacterCondition(39) do yield("/wait 1") end
     yield("/wait 1")
-    yield("/pcall Repair true -1")
+    yield("/callback Repair true -1")
 end
 if NeedsRepair(Repair_Amount) and Npc_Repair then
     if IsInZone(886) then -- Check if in Firmament
         WalkTo(47, -16, 151)
         TargetedInteract("Eilonwy") -- Interact with target named "Eilonwy"
-        yield("/pcall SelectIconString false 1") 
+        yield("/callback SelectIconString false 1") 
         while not IsAddonReady("Repair") do 
         yield("/wait 0.1")
     end
-    yield("/pcall Repair true 0") 
+    yield("/callback Repair true 0") 
     yield("/wait 0.1")
     if IsAddonReady("SelectYesno") then
-        yield("/pcall SelectYesno true 0")
+        yield("/callback SelectYesno true 0")
         yield("/wait 0.1")
     end
-    yield("/pcall Repair true -1") 
+    yield("/callback Repair true -1") 
     yield("/wait 0.1")
     WalkTo(-18.5, -16, 142) --Walks to target named "Eilonwy"
     else
@@ -829,15 +830,15 @@ end
 if IsInZone(886) then
     while GetCharacterCondition(34, false) and GetCharacterCondition(45, false) do
         if IsAddonVisible("ContentsFinderConfirm") then
-            yield("/pcall ContentsFinderConfirm true 8")
+            yield("/callback ContentsFinderConfirm true 8")
         elseif GetTargetName()=="" then
             yield("/target Aurvael")
         elseif GetCharacterCondition(32, false) then
             yield("/interact")
         end
-        if IsAddonVisible("Talk") then yield("/click  Talk_Click") end
-        if IsAddonVisible("SelectString") then yield("/pcall SelectString true 0") end
-        if IsAddonVisible("SelectYesno") then yield("/pcall SelectYesno true 0") end
+        if IsAddonVisible("Talk") then yield("/click  Talk Click") end
+        if IsAddonVisible("SelectString") then yield("/callback SelectString true 0") end
+        if IsAddonVisible("SelectYesno") then yield("/callback SelectYesno true 0") end
         yield("/wait 0.5")
     end
     while GetCharacterCondition(35, false) do yield("/wait 1") end
